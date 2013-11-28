@@ -10,7 +10,7 @@
 
 module.exports = function(grunt) {
 
-    var fs          = require("fs-extra"),
+    var fs          = require("fs"),
         path        = require("path"),
         phantom     = require("grunt-lib-phantomjs").init(grunt);
 
@@ -78,16 +78,9 @@ module.exports = function(grunt) {
                 msg = msg.replace(regex, value);
             });
 
-            fs.writeFile(fileName,msg,function(error){
-                if(error){
-                    grunt.log.error(["Error Creating file ",fileName,error])
-                }else{
-                    grunt.log.ok([fileName, 'written']);
-
-                }
-            })
+            var done=this.async();
+            grunt.file.write(fileName, msg);
             phantom.halt();
-
             isLastUrl(plainUrl) && done();
         });
 
