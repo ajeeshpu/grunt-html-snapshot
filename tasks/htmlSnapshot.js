@@ -78,8 +78,8 @@ module.exports = function(grunt) {
                 msg = msg.replace(regex, value);
             });
 
-            var done=this.async();
             grunt.file.write(fileName, msg);
+            grunt.log.writeln(fileName, 'written');
             phantom.halt();
             isLastUrl(plainUrl) && done();
         });
